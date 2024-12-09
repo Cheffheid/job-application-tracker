@@ -2,6 +2,9 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
+
+import TopNav from "./_components/topnav";
 
 export const metadata: Metadata = {
   title: "My Job Application Tracker",
@@ -9,23 +12,16 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-function TopNav() {
-  return (
-    <nav className="flex w-full items-center justify-between border-b p-4 text-xl font-semibold">
-      <div>Applications</div>
-      <div>Sign In</div>
-    </nav>
-  );
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body className="bg-slate-900 text-white">
-        <TopNav></TopNav>
-        {children}
+        <SessionProvider>
+          <TopNav></TopNav>
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
