@@ -34,6 +34,7 @@ export const application = createTable("application", {
   company: varchar("company", { length: 256 }).notNull(),
   status: statusesEnum("status").default("pending"),
   appliedAt: date("applied_at", { mode: "string" }),
+  statusUrl: varchar("statusurl", { length: 1024 }),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
