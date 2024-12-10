@@ -27,7 +27,7 @@ export default function ApplicationCard({
 
   if ("rejected" === status) {
     return (
-      <div className="w-full bg-gray-300 p-4 text-black shadow-sm">
+      <div className="w-full bg-gray-300 p-4 text-red-800 shadow-sm">
         {content}
       </div>
     );
