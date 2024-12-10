@@ -15,7 +15,7 @@ export async function createApplication(
     role: z.string().min(1),
     company: z.string().min(1),
     appliedAt: z.string().min(1),
-    statusurl: z.string(),
+    statusUrl: z.string(),
     descriptionUrl: z.string().min(1),
   });
 
@@ -23,7 +23,7 @@ export async function createApplication(
     role: formData.get("role"),
     company: formData.get("company"),
     appliedAt: formData.get("applied_at"),
-    statusurl: formData.get("statusurl"),
+    statusUrl: formData.get("statusurl"),
     descriptionUrl: formData.get("descriptionurl"),
   });
 
