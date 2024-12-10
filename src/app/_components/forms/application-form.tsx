@@ -58,18 +58,6 @@ export default function ApplicationForm() {
         <input
           className={inputClasses}
           type="url"
-          name="statusurl"
-          id="statusurl"
-          placeholder=""
-        ></input>
-        <label className={labelClasses} htmlFor="role">
-          Status URL
-        </label>
-      </div>
-      <div className="group relative z-0 mb-5 w-full">
-        <input
-          className={inputClasses}
-          type="url"
           name="descriptionurl"
           id="descriptionurl"
           placeholder=""
@@ -77,6 +65,18 @@ export default function ApplicationForm() {
         ></input>
         <label className={labelClasses} htmlFor="role">
           Job Description URL
+        </label>
+      </div>
+      <div className="group relative z-0 mb-5 w-full">
+        <input
+          className={inputClasses}
+          type="url"
+          name="statusurl"
+          id="statusurl"
+          placeholder=""
+        ></input>
+        <label className={labelClasses} htmlFor="role">
+          Status URL
         </label>
       </div>
       <button
