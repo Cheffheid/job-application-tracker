@@ -18,7 +18,7 @@ export const statusesEnum = pgEnum("statuses", [
   "rejected",
 ]);
 
-export const accessEnum = pgEnum("accesslevels", ["read", "write"]);
+export const accessEnum = pgEnum("accesslevels", ["read", "write", "demo"]);
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -58,7 +58,7 @@ export const users = createTable("user", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
-  accessLevel: accessEnum("accesslevel").default("read"),
+  accessLevel: accessEnum("accesslevel").default("demo"),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
