@@ -9,7 +9,7 @@ Just for funsies, because keeping track of all this stuff in a todo list is gett
 [x] Set up database
 [x] Create DB schema for "job application" (status, title, company, workday link)
 [x] Add Auth (auth.js)
-[x] Add dashboard page for signed in user
-[ ] Add new job applications
+[x] Add dashboard/application management page for signed in user
+[x] Add new job applications
 [ ] Edit job application status
 [ ] Delete job applications
