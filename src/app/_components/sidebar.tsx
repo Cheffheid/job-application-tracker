@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { auth } from "~/server/auth";
 
+const linkClasses =
+  "false group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-textSidebar duration-100 ease-in-out hover:bg-hoverSidebar focus:bg-hoverSidebar";
+
 async function AdminMenu() {
   const session = await auth();
 
@@ -15,10 +18,7 @@ async function AdminMenu() {
       </h3>
       <ul className="mb-6 flex flex-col gap-1.5">
         <li>
-          <Link
-            href="/application/add"
-            className="false group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-textSidebar duration-300 ease-in-out hover:bg-hoverSidebar focus:bg-hoverSidebar"
-          >
+          <Link href="/application/add" className={linkClasses}>
             Add New
           </Link>
         </li>
@@ -40,10 +40,7 @@ export default function Sidebar() {
         </h3>
         <ul className="mb-6 flex flex-col gap-1.5">
           <li>
-            <Link
-              href="/"
-              className="false group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-textSidebar duration-300 ease-in-out hover:bg-hoverSidebar focus:bg-hoverSidebar"
-            >
+            <Link href="/" className={linkClasses}>
               Applications
             </Link>
           </li>
