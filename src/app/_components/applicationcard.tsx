@@ -17,7 +17,9 @@ export default function ApplicationCard({
 }: ApplicationCardProps) {
   const content = (
     <>
-      <h3 className="font-semibold">{role}</h3>
+      <h3 className="overflow-hidden overflow-ellipsis text-nowrap font-semibold">
+        {role}
+      </h3>
       <p>{company}</p>
       <p>
         {appliedAt} &bull; {status}
@@ -25,9 +27,11 @@ export default function ApplicationCard({
     </>
   );
 
+  const sharedClasses = "flex w-full flex-col shadow-sm p-4";
+
   if ("rejected" === status) {
     return (
-      <div className="w-full bg-gray-300 p-4 text-red-800 shadow-sm">
+      <div className={`${sharedClasses} bg-gray-300 text-red-800`}>
         {content}
       </div>
     );
@@ -37,7 +41,7 @@ export default function ApplicationCard({
     <Link
       href={descriptionUrl}
       target="_blank"
-      className="w-full bg-white p-4 text-black shadow-sm duration-100 ease-in-out hover:bg-slate-700 hover:text-white"
+      className={`${sharedClasses} bg-white text-black duration-100 ease-in-out hover:bg-slate-700 hover:text-white`}
     >
       {content}
     </Link>
