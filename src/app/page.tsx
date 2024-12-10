@@ -7,10 +7,10 @@ export default async function HomePage() {
 
   return (
     <main className="">
-      <div className="mx-auto flex max-w-7xl flex-wrap gap-y-4 py-4">
+      <div className="mx-auto grid max-w-7xl grid-cols-4 gap-4 py-4">
         {applications.map((application) => (
-          <div key={application.id} className="w-1/3">
-            <h2>{application.role}</h2>
+          <div key={application.id} className="w-full bg-white p-4 text-black">
+            <h2 className="font-semibold">{application.role}</h2>
             <p>
               {application.company} &bull; {application.appliedAt} &bull;{" "}
               {application.status}
