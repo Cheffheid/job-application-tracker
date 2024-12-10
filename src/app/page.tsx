@@ -1,10 +1,10 @@
-import { db } from "~/server/db";
 import ApplicationCard from "./_components/applicationcard";
+import { getApplications } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const applications = await db.query.application.findMany();
+  const applications = await getApplications();
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 pt-4">
