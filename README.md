@@ -1,6 +1,6 @@
 # My Job Application Tracker
 
-Just for funsies, because keeping track of all this stuff in a todo list is getting a little unwieldy.
+Just for funsies, because keeping track of all this stuff in a todo list is getting a little unwieldy and this will let me share this stuff a little more readily.
 
 ## TODO
 
