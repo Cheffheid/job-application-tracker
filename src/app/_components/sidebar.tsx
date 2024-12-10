@@ -10,9 +10,9 @@ async function AdminMenu() {
 
   return (
     <>
-      <h2 className="mb-4 ml-4 text-sm font-semibold text-textSidebar">
+      <h3 className="mb-4 ml-4 text-sm font-semibold text-textSidebar">
         Admin
-      </h2>
+      </h3>
       <ul className="mb-6 flex flex-col gap-1.5">
         <li>
           <Link
@@ -30,10 +30,14 @@ async function AdminMenu() {
 export default function Sidebar() {
   return (
     <aside className="z-9999 absolute left-0 top-0 flex h-screen w-60 -translate-x-full flex-col overflow-y-hidden bg-slate-900 duration-300 ease-linear lg:static lg:translate-x-0">
+      <div className="flex items-center justify-between gap-2 p-5 lg:p-6">
+        <h1 className="font-bold text-white">Job Application Tracker</h1>
+      </div>
       <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
-        <h2 className="mb-4 ml-4 text-sm font-semibold text-textSidebar">
+        <h2 className="sr-only">Sidebar</h2>
+        <h3 className="mb-4 ml-4 text-sm font-semibold text-textSidebar">
           Main
-        </h2>
+        </h3>
         <ul className="mb-6 flex flex-col gap-1.5">
           <li>
             <Link
