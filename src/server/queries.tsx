@@ -6,7 +6,7 @@ export async function getApplications() {
   const session = await auth();
   let applications = [];
 
-  if (!session || "demo" !== session.user.accessLevel) {
+  if (!session || "demo" === session.user.accessLevel) {
     applications = getDummyApplications();
   } else {
     applications = await db.query.application.findMany({
