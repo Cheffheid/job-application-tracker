@@ -1,4 +1,5 @@
 import { db } from "~/server/db";
+import ApplicationCard from "./_components/applicationcard";
 
 export const dynamic = "force-dynamic";
 
@@ -10,16 +11,14 @@ export default async function HomePage() {
       <h2 className="text-2xl font-semibold">Application List</h2>
       <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
         {applications.map((application) => (
-          <div
+          <ApplicationCard
             key={application.id}
-            className="w-full bg-white p-4 text-black shadow-sm"
-          >
-            <h3 className="font-semibold">{application.role}</h3>
-            <p>
-              {application.company} &bull; {application.appliedAt} &bull;{" "}
-              {application.status}
-            </p>
-          </div>
+            role={application.role}
+            company={application.company}
+            status={application.status}
+            appliedAt={application.appliedAt}
+            descriptionUrl={application.descriptionUrl}
+          ></ApplicationCard>
         ))}
       </div>
     </div>
