@@ -1,12 +1,11 @@
 import "server-only";
 import { db } from "./db";
-import { auth } from "~/server/auth";
+import { isDemoUser } from "~/app/actions";
 
 export async function getApplications() {
-  const session = await auth();
   let applications = [];
 
-  if (!session || "demo" === session.user.accessLevel) {
+  if (await isDemoUser()) {
     applications = getDummyApplications();
   } else {
     applications = await db.query.application.findMany({

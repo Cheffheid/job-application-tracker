@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "~/server/db";
 import { application } from "~/server/db/schema";
+import { auth } from "~/server/auth";
 
 type NewApplication = typeof application.$inferInsert;
 
@@ -42,4 +43,10 @@ export async function createApplication(
   } catch (e) {
     return { message: "Failed to create application" };
   }
+}
+
+export async function isDemoUser() {
+  const session = await auth();
+
+  return !session || "demo" === session.user.accessLevel;
 }
