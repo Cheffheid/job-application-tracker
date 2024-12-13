@@ -1,12 +1,27 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 import { createApplication } from "~/app/actions";
 
-const initialState = { message: "" };
+const initialState = {
+  message: "",
+  payload: {
+    completed: false,
+    successful: false,
+  },
+};
 
 export default function ApplicationForm() {
   const [state, formAction] = useActionState(createApplication, initialState);
+
+  useEffect(() => {
+    if (state?.payload?.completed) {
+      toast(state.message);
+
+      state.payload.completed = false;
+    }
+  });
 
   const inputClasses =
     "peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0";
@@ -81,7 +96,7 @@ export default function ApplicationForm() {
       </div>
       <button
         type="submit"
-        className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:w-auto"
       >
         Add
       </button>
