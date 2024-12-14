@@ -5,9 +5,10 @@ import { type Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 
 import TopNav from "./_components/topnav";
-import Sidebar from "./_components/sidebar";
 
 import { Toaster } from "~/components/ui/sonner";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
+import AppSidebar from "./_components/appsidebar";
 
 export const metadata: Metadata = {
   title: "My Job Application Tracker",
@@ -22,16 +23,16 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <SessionProvider>
-          <div className="flex h-screen overflow-hidden">
-            <Sidebar></Sidebar>
-            <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+          <SidebarProvider>
+            <AppSidebar variant="inset" />
+            <SidebarInset>
               <TopNav></TopNav>
               <main className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-slate-100">
                 {children}
               </main>
               <Toaster />
-            </div>
-          </div>
+            </SidebarInset>
+          </SidebarProvider>
         </SessionProvider>
       </body>
     </html>
