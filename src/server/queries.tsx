@@ -12,6 +12,7 @@ export async function getApplications() {
       orderBy: (model, { desc, asc }) => [
         asc(model.status),
         desc(model.appliedAt),
+        desc(model.createdAt),
       ],
     });
   }
