@@ -29,7 +29,7 @@ async function AdminMenu() {
 
 export default function Sidebar() {
   return (
-    <aside className="z-9999 absolute left-0 top-0 flex h-screen w-60 -translate-x-full flex-col overflow-y-hidden bg-slate-900 duration-300 ease-linear lg:static lg:translate-x-0">
+    <aside className="absolute left-0 top-0 z-50 flex h-screen w-60 -translate-x-full flex-col overflow-y-hidden bg-slate-900 duration-300 ease-linear lg:static lg:translate-x-0">
       <div className="flex items-center justify-between gap-2 p-5 lg:p-6">
         <h1 className="font-bold text-white">Job Application Tracker</h1>
       </div>
