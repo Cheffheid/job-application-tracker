@@ -17,7 +17,7 @@ export default function ApplicationCard({
 }: ApplicationCardProps) {
   const content = (
     <>
-      <h3 className="overflow-hidden overflow-ellipsis text-nowrap font-semibold">
+      <h3 className="font-semibold sm:overflow-hidden sm:overflow-ellipsis sm:text-nowrap">
         {role}
       </h3>
       <p>{company}</p>
