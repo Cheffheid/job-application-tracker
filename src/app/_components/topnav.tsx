@@ -1,11 +1,13 @@
 import { auth, signIn, signOut } from "~/server/auth";
+import { SidebarTrigger } from "~/components/ui/sidebar";
 
 export default async function TopNav() {
   const session = await auth();
 
   return (
     <header className="drop-shadow-1 top-0 flex w-full">
-      <nav className="shadow-2 flex flex-grow items-center justify-end px-4 py-4 md:px-6 2xl:px-11">
+      <nav className="shadow-2 flex flex-grow items-center justify-between py-4 pl-1 pr-4 md:pr-6 2xl:pr-11">
+        <SidebarTrigger />
         {session ? (
           <button
             className="hover:underline"
