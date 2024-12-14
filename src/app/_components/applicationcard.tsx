@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StatusBadge from "./statusbadge";
 
 interface ApplicationCardProps {
   role: string;
@@ -15,24 +16,18 @@ export default function ApplicationCard({
   appliedAt,
   descriptionUrl,
 }: ApplicationCardProps) {
-  const content = (
-    <>
-      <h3 className="font-semibold sm:overflow-hidden sm:overflow-ellipsis sm:text-nowrap">
-        {role}
-      </h3>
-      <p>{company}</p>
-      <p>
-        {appliedAt} &bull; {status}
-      </p>
-    </>
-  );
-
   const sharedClasses = "flex w-full flex-col shadow-sm p-4";
 
   if ("rejected" === status) {
     return (
-      <div className={`${sharedClasses} bg-gray-300 text-red-800`}>
-        {content}
+      <div className={`${sharedClasses} bg-white text-red-800 line-through`}>
+        <h3 className="font-semibold sm:overflow-hidden sm:overflow-ellipsis sm:text-nowrap">
+          {role}
+        </h3>
+        <p>{company}</p>
+        <div>
+          {appliedAt} &bull; {status}
+        </div>
       </div>
     );
   }
@@ -43,7 +38,14 @@ export default function ApplicationCard({
       target="_blank"
       className={`${sharedClasses} bg-white text-black duration-100 ease-in-out hover:bg-slate-700 hover:text-white`}
     >
-      {content}
+      <h3 className="font-semibold sm:overflow-hidden sm:overflow-ellipsis sm:text-nowrap">
+        {role}
+      </h3>
+      <p>{company}</p>
+      <div>
+        {appliedAt} &bull;{" "}
+        {status && <StatusBadge status={status}>{status}</StatusBadge>}
+      </div>
     </Link>
   );
 }
