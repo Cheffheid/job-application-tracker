@@ -524,7 +524,6 @@ export {
   SidebarInset,
   SidebarMenu,
   SidebarMenuAction,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
   SidebarSeparator,
