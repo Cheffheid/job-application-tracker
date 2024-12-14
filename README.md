@@ -13,3 +13,7 @@ Just for funsies, because keeping track of all this stuff in a todo list is gett
 - [x] Add new job applications
 - [ ] Edit job application status
 - [ ] Delete job applications?
+
+## Screenshot
+
+![image](https://github.com/user-attachments/assets/fff17d24-7d8c-49d3-bf96-67a8e27be020)
