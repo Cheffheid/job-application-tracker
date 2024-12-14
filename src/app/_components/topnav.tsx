@@ -1,5 +1,6 @@
-import { auth, signIn, signOut } from "~/server/auth";
+import { auth, signIn } from "~/server/auth";
 import { SidebarTrigger } from "~/components/ui/sidebar";
+import UserBadge from "./userbadge";
 
 export default async function TopNav() {
   const session = await auth();
@@ -9,15 +10,10 @@ export default async function TopNav() {
       <nav className="shadow-2 flex flex-grow items-center justify-between py-4 pl-1 pr-4 md:pr-6 2xl:pr-11">
         <SidebarTrigger />
         {session ? (
-          <button
-            className="hover:underline"
-            onClick={async () => {
-              "use server";
-              await signOut();
-            }}
-          >
-            Sign out
-          </button>
+          <UserBadge
+            name={session.user.name ? session.user.name : ""}
+            image={session.user.image ? session.user.image : ""}
+          />
         ) : (
           <button
             className="hover:underline"
