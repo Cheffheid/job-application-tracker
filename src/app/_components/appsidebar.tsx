@@ -34,6 +34,11 @@ async function AdminMenu() {
               Add New
             </Link>
           </SidebarMenuItem>
+          <SidebarMenuItem>
+            <Link href="/application/update" className={linkClasses}>
+              Update
+            </Link>
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

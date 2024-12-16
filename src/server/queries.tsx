@@ -20,6 +20,16 @@ export async function getApplications() {
   return applications;
 }
 
+export async function getAdminApplicationList() {
+  let applications = [];
+
+  applications = await db.query.application.findMany({
+    orderBy: (model, { desc }) => [desc(model.createdAt)],
+  });
+
+  return applications;
+}
+
 export function getDummyApplications(): {
   id: number;
   role: string;
