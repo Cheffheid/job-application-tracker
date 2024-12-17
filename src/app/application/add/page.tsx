@@ -1,4 +1,4 @@
-import ApplicationForm from "~/app/_components/forms/application-form";
+import ApplicationForm from "~/app/_components/forms/application-add-form";
 
 export default async function AddApplication() {
   return (
