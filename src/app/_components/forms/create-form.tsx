@@ -12,7 +12,7 @@ const initialState = {
   },
 };
 
-export default function ApplicationAddForm() {
+export default function CreateForm() {
   const [state, formAction] = useActionState(createApplication, initialState);
 
   useEffect(() => {
