@@ -1,3 +1,4 @@
+import Link from "next/link";
 import StatusBadge from "~/app/_components/statusbadge";
 import { getAdminApplicationList } from "~/server/queries";
 
@@ -33,7 +34,7 @@ export default async function Dashboard() {
             {applications.map((application) => (
               <tr key={application.id} className="odd:bg-white even:bg-gray-50">
                 <th scope="row" className="p-2 text-left font-semibold">
-                  {application.role}
+                  <a href={application.descriptionUrl}>{application.role}</a>
                 </th>
                 <td className="p-2">{application.company}</td>
                 <td className="p-2">{application.appliedAt}</td>
