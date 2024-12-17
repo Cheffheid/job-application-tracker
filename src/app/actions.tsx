@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
 import { db } from "~/server/db";
 import { application } from "~/server/db/schema";
 import { auth } from "~/server/auth";
+import { createInsertSchema } from "drizzle-zod";
 
 type NewApplication = typeof application.$inferInsert;
 
@@ -24,13 +24,7 @@ export async function createApplication(
     successful: boolean;
   };
 }> {
-  const schema = z.object({
-    role: z.string().min(1),
-    company: z.string().min(1),
-    appliedAt: z.string().min(1),
-    statusUrl: z.string(),
-    descriptionUrl: z.string().min(1),
-  });
+  const schema = createInsertSchema(application);
 
   const parse = schema.safeParse({
     role: formData.get("role"),
