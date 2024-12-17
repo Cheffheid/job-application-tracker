@@ -9,6 +9,7 @@ import TopNav from "./_components/topnav";
 import { Toaster } from "~/components/ui/sonner";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 import AppSidebar from "./_components/appsidebar";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "My Job Application Tracker",
@@ -18,7 +19,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  modal,
+}: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
@@ -29,6 +31,8 @@ export default function RootLayout({
               <TopNav></TopNav>
               <main className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-slate-100">
                 {children}
+                {modal}
+                <div id="modal-root"></div>
               </main>
               <Toaster />
             </SidebarInset>
