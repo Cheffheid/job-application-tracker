@@ -47,7 +47,9 @@ export default async function Dashboard() {
                 </td>
                 <td className="p-2">
                   <button className="mr-1">delete</button>
-                  <button>edit</button>
+                  <Link href={`/application/update/${application.id}`}>
+                    edit
+                  </Link>
                 </td>
               </tr>
             ))}
