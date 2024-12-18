@@ -103,6 +103,7 @@ export async function updateApplication(
     appliedAt: formData.get("applied_at"),
     statusUrl: formData.get("statusurl"),
     descriptionUrl: formData.get("descriptionurl"),
+    status: formData.get("status"),
   });
 
   if (!parse.success) {

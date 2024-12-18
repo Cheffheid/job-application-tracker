@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateApplication } from "~/app/actions";
+import { statusesEnum } from "~/server/db/schema";
 
 export default function UpdateForm({
   application,
@@ -28,7 +29,9 @@ export default function UpdateForm({
   const [state, formAction] = useActionState(updateApplication, initialState);
   const [applicationData, setApplicationData] = useState({ ...application });
 
-  function handleValueUpdate(e: React.FormEvent<HTMLInputElement>) {
+  function handleValueUpdate(
+    e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>,
+  ) {
     const { name, value } = e.currentTarget;
 
     setApplicationData((applicationData) => ({
@@ -126,6 +129,22 @@ export default function UpdateForm({
         <label className={labelClasses} htmlFor="role">
           Status URL
         </label>
+      </div>
+      <div className="group relative z-0 mb-5 w-full">
+        <select
+          className={inputClasses}
+          name="status"
+          id="status"
+          onChange={handleValueUpdate}
+        >
+          {statusesEnum.enumValues.map((statusText, idx) => {
+            return (
+              <option key={`status-${idx}`} value={statusText}>
+                {statusText}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <button
         type="submit"
