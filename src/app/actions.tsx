@@ -97,7 +97,7 @@ export async function updateApplication(
   });
 
   const parse = schema.safeParse({
-    id: formData.get("id"),
+    id: Number(formData.get("id")),
     role: formData.get("role"),
     company: formData.get("company"),
     appliedAt: formData.get("applied_at"),
@@ -124,15 +124,15 @@ export async function updateApplication(
   try {
     await db.update(application).set(data).where(eq(application.id, data.id));
 
-    revalidatePath("/");
+    revalidatePath("/application/update");
 
     return {
-      message: `Added application for ${data.role}`,
+      message: `Updated application for ${data.role} at ${data.company}`,
       payload: { completed: true, successful: true },
     };
   } catch (e) {
     return {
-      message: "Failed to create application",
+      message: "Failed to update application",
       payload: { completed: true, successful: false },
     };
   }
