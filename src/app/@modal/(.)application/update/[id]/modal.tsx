@@ -21,12 +21,32 @@ export function Modal({ children }: { children: React.ReactNode }) {
   return createPortal(
     <div className="modal-backdrop">
       <dialog ref={dialogRef} className="modal" onClose={onDismiss}>
+        <div className="flex justify-between px-4 py-2">
+          <h2>Update Application</h2>
+          <button
+            onClick={onDismiss}
+            className=""
+            aria-label="close modal"
+            autoFocus
+          >
+            <svg
+              className="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
         {children}
-        <button
-          onClick={onDismiss}
-          className="close-button"
-          aria-label="close modal"
-        />
       </dialog>
     </div>,
     document.getElementById("modal-root")!,
