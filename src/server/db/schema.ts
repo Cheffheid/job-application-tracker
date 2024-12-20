@@ -14,7 +14,11 @@ import { type AdapterAccount } from "next-auth/adapters";
 
 export const statusesEnum = pgEnum("statuses", [
   "pending",
+  "received take-home",
+  "completed take-home",
+  "invited to interview",
   "interviewed",
+  "received offer",
   "rejected",
 ]);
 
