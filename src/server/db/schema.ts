@@ -12,7 +12,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-const statusTypes = ["pending", "interviewed", "rejected"] as const;
+const statusTypes = ["interviewed", "pending", "rejected"] as const;
 
 const secondaryStatusTypes = [
   "",
