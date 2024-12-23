@@ -34,7 +34,9 @@ export default async function Dashboard() {
             {applications.map((application) => (
               <tr key={application.id} className="odd:bg-white even:bg-gray-50">
                 <th scope="row" className="p-2 text-left font-semibold">
-                  <a href={application.descriptionUrl}>{application.role}</a>
+                  <Link href={`/application/details/${application.id}`}>
+                    {application.role}
+                  </Link>
                 </th>
                 <td className="p-2">{application.company}</td>
                 <td className="p-2">{application.appliedAt}</td>
@@ -47,7 +49,10 @@ export default async function Dashboard() {
                 </td>
                 <td className="p-2">
                   <button className="mr-1">delete</button>
-                  <Link href={`/application/update/${application.id}`}>
+                  <Link
+                    className="mr-1"
+                    href={`/application/update/${application.id}`}
+                  >
                     edit
                   </Link>
                 </td>
