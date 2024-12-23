@@ -95,6 +95,7 @@ export async function updateApplication(
     statusUrl: formData.get("statusurl"),
     descriptionUrl: formData.get("descriptionurl"),
     applicationStatus: formData.get("applicationStatus"),
+    secondaryStatus: formData.get("secondaryStatus"),
   });
 
   if (!parse.success) {
