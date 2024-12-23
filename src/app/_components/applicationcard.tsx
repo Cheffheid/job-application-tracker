@@ -4,7 +4,7 @@ import StatusBadge from "./statusbadge";
 interface ApplicationCardProps {
   role: string;
   company: string;
-  status: "pending" | "interviewed" | "rejected" | null;
+  status: string | null;
   appliedAt: string;
   descriptionUrl: string;
 }

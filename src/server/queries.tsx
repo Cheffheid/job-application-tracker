@@ -34,7 +34,7 @@ export function getDummyApplications(): {
   id: number;
   role: string;
   company: string;
-  status: "pending" | "interviewed" | "rejected" | null;
+  status: string | null;
   appliedAt: string;
   descriptionUrl: string;
 }[] {

@@ -12,7 +12,7 @@ export default function UpdateForm({
     id: number;
     role: string;
     company: string;
-    status: "pending" | "interviewed" | "rejected" | null;
+    status: string | null;
     appliedAt: string;
     statusUrl: string | null;
     descriptionUrl: string;
