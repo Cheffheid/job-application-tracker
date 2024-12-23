@@ -12,8 +12,10 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-export const statusesEnum = pgEnum("statuses", [
-  "pending",
+const statusTypes = ["pending", "interviewed", "rejected"] as const;
+
+const secondaryStatusTypes = [
+  "",
   "received take-home",
   "completed take-home",
   "invited to interview",
@@ -21,8 +23,13 @@ export const statusesEnum = pgEnum("statuses", [
   "completed tech interview",
   "completed interview rounds",
   "received offer",
-  "rejected",
-]);
+] as const;
+
+export const statusesEnum = pgEnum("statuses", statusTypes);
+export const secondaryStatusesEnum = pgEnum(
+  "secondaryStatuses",
+  secondaryStatusTypes,
+);
 
 export const accessEnum = pgEnum("accesslevels", ["read", "write", "demo"]);
 
@@ -40,7 +47,8 @@ export const application = createTable("application", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
   role: varchar("role", { length: 256 }).notNull(),
   company: varchar("company", { length: 256 }).notNull(),
-  status: statusesEnum("status").default("pending"),
+  applicationStatus: statusesEnum("applicationStatus").default("pending"),
+  secondaryStatus: secondaryStatusesEnum("secondaryStatus").default(""),
   appliedAt: date("applied_at", { mode: "string" }).notNull(),
   statusUrl: varchar("statusurl", { length: 1024 }).default(""),
   descriptionUrl: varchar("descriptionurl", { length: 1024 }).notNull(),

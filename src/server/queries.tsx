@@ -10,7 +10,7 @@ export async function getApplications() {
   } else {
     applications = await db.query.application.findMany({
       orderBy: (model, { desc, asc }) => [
-        asc(model.status),
+        asc(model.applicationStatus),
         desc(model.appliedAt),
         desc(model.createdAt),
       ],
