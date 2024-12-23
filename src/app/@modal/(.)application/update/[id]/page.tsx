@@ -1,5 +1,5 @@
 import UpdateForm from "~/app/_components/forms/update-form";
-import { Modal } from "./modal";
+import { Modal } from "~/app/_components/modal";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
 import { application } from "~/server/db/schema";
@@ -29,7 +29,7 @@ export default async function ApplicationModal({
   }
 
   return (
-    <Modal>
+    <Modal title="Update Application">
       <UpdateForm application={applicationData} />
     </Modal>
   );

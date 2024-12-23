@@ -4,7 +4,13 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 
-export function Modal({ children }: { children: React.ReactNode }) {
+export function Modal({
+  title = "Application Details",
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -25,7 +31,9 @@ export function Modal({ children }: { children: React.ReactNode }) {
       onClose={onDismiss}
     >
       <div className="flex justify-between px-4 py-2">
-        <h2>Update Application</h2>
+        <h2>
+          <strong>{title}</strong>
+        </h2>
         <button
           onClick={onDismiss}
           className=""
