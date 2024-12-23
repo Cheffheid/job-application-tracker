@@ -8,15 +8,6 @@ import { createInsertSchema } from "drizzle-zod";
 import { eq } from "drizzle-orm";
 
 type ApplicationType = typeof application.$inferInsert;
-type UpdateType = {
-  id?: number | undefined;
-  role?: string | undefined;
-  company?: string | undefined;
-  status?: "pending" | "interviewed" | "rejected" | null | undefined;
-  appliedAt?: string | undefined;
-  statusUrl?: string | null | undefined;
-  descriptionUrl?: string | undefined;
-};
 
 export async function isDemoUser() {
   const session = await auth();
@@ -113,7 +104,7 @@ export async function updateApplication(
     };
   }
 
-  const data: UpdateType = parse.data;
+  const data = parse.data;
 
   if (!data.id) {
     return {
