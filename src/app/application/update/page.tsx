@@ -39,9 +39,9 @@ export default async function Dashboard() {
                 <td className="p-2">{application.company}</td>
                 <td className="p-2">{application.appliedAt}</td>
                 <td className="p-2">
-                  {application.status && (
-                    <StatusBadge status={application.status}>
-                      {application.status}
+                  {application.applicationStatus && (
+                    <StatusBadge status={application.applicationStatus}>
+                      {application.applicationStatus}
                     </StatusBadge>
                   )}
                 </td>

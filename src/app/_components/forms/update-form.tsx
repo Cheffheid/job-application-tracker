@@ -12,7 +12,7 @@ export default function UpdateForm({
     id: number;
     role: string;
     company: string;
-    status: string | null;
+    applicationStatus: string | null;
     appliedAt: string;
     statusUrl: string | null;
     descriptionUrl: string;
@@ -133,8 +133,8 @@ export default function UpdateForm({
       <div className="group relative z-0 mb-5 w-full">
         <select
           className={inputClasses}
-          name="status"
-          id="status"
+          name="applicationStatus"
+          id="applicationStatus"
           onChange={handleValueUpdate}
         >
           {statusesEnum.enumValues.map((statusText, idx) => {

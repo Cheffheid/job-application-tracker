@@ -17,7 +17,7 @@ export default async function HomePage() {
             key={application.id}
             role={application.role}
             company={application.company}
-            status={application.status}
+            status={application.applicationStatus}
             appliedAt={application.appliedAt}
             descriptionUrl={application.descriptionUrl}
           ></ApplicationCard>
