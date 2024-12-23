@@ -17,7 +17,9 @@ export const statusesEnum = pgEnum("statuses", [
   "received take-home",
   "completed take-home",
   "invited to interview",
-  "interviewed",
+  "completed recruiter interview",
+  "completed tech interview",
+  "completed interview rounds",
   "received offer",
   "rejected",
 ]);
