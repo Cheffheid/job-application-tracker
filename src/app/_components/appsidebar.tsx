@@ -20,7 +20,7 @@ const linkClasses =
 async function AdminMenu() {
   const session = await auth();
 
-  if (!session || "write" !== session.user.accessLevel) {
+  if (!session || "admin" !== session.user.accessLevel) {
     return;
   }
 
