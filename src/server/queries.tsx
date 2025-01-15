@@ -1,14 +1,24 @@
 import "server-only";
 import { db } from "./db";
-import { isDemoUser } from "~/app/actions";
+import { isDemoUser, getUserId } from "~/app/actions";
 
 export async function getApplications() {
-  let applications = [];
+  let applications: {
+    id: number;
+    role: string;
+    company: string;
+    applicationStatus: string | null;
+    appliedAt: string;
+    descriptionUrl: string;
+  }[] = [];
+
+  const userId: string = await getUserId();
 
   if (await isDemoUser()) {
     applications = getDummyApplications();
   } else {
     applications = await db.query.applications.findMany({
+      where: (applications, { eq }) => eq(applications.createdBy, userId),
       orderBy: (model, { desc, asc }) => [
         asc(model.applicationStatus),
         desc(model.appliedAt),
