@@ -81,7 +81,7 @@ export const applications = createTable("applications", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
     () => new Date(),
   ),
-  createdBy: integer("created_by"),
+  createdBy: varchar("created_by", { length: 255 }),
 });
 
 export const applicationRelations = relations(applications, ({ one }) => ({
