@@ -11,7 +11,8 @@ Just for funsies, because keeping track of all this stuff in a todo list is gett
 - [x] Add Auth (auth.js)
 - [x] Add dashboard/application management page for signed in user
 - [x] Add new job applications
-- [ ] Edit job application status
+- [x] Edit job application status
+- [x] Update applications to be linked to the user
 - [ ] Delete job applications?
 
 ## Screenshot
