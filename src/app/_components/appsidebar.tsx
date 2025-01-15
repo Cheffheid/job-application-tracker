@@ -17,7 +17,7 @@ import {
 const linkClasses =
   "false group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-textSidebar duration-100 ease-in-out hover:bg-hoverSidebar focus:bg-hoverSidebar";
 
-async function AdminMenu() {
+async function AdminMenuItems() {
   const session = await auth();
 
   if (!session || "demo" === session.user.accessLevel) {
@@ -25,23 +25,18 @@ async function AdminMenu() {
   }
 
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Applications</SidebarGroupLabel>
-      <SidebarGroupContent>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <Link href="/application/add" className={linkClasses}>
-              Add New
-            </Link>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <Link href="/application/update" className={linkClasses}>
-              Manage
-            </Link>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
+    <>
+      <SidebarMenuItem>
+        <Link href="/application/update" className={linkClasses}>
+          Manage
+        </Link>
+      </SidebarMenuItem>
+      <SidebarMenuItem>
+        <Link href="/application/add" className={linkClasses}>
+          Add New
+        </Link>
+      </SidebarMenuItem>
+    </>
   );
 }
 
@@ -60,18 +55,18 @@ export default function AppSidebar({
           <VisuallyHidden.Root>
             <h2>Sidebar</h2>
           </VisuallyHidden.Root>
-          <SidebarGroupLabel>Main</SidebarGroupLabel>
+          <SidebarGroupLabel>Applications</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 <Link href="/" className={linkClasses}>
-                  Applications
+                  List
                 </Link>
               </SidebarMenuItem>
+              <AdminMenuItems></AdminMenuItems>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <AdminMenu></AdminMenu>
       </SidebarContent>
     </Sidebar>
   );
