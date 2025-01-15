@@ -8,7 +8,7 @@ export async function getApplications() {
   if (await isDemoUser()) {
     applications = getDummyApplications();
   } else {
-    applications = await db.query.application.findMany({
+    applications = await db.query.applications.findMany({
       orderBy: (model, { desc, asc }) => [
         asc(model.applicationStatus),
         desc(model.appliedAt),
@@ -23,7 +23,7 @@ export async function getApplications() {
 export async function getAdminApplicationList() {
   let applications = [];
 
-  applications = await db.query.application.findMany({
+  applications = await db.query.applications.findMany({
     orderBy: (model, { desc }) => [desc(model.createdAt)],
   });
 

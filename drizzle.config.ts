@@ -8,5 +8,5 @@ export default {
   dbCredentials: {
     url: env.DATABASE_URL,
   },
-  tablesFilter: ["job-application-tracker_*"],
+  tablesFilter: ["jat_*"],
 } satisfies Config;

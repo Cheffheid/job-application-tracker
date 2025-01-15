@@ -12,9 +12,12 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
-const statusTypes = ["interviewed", "pending", "rejected"] as const;
-
-const secondaryStatusTypes = [
+export const appStatusEnum = pgEnum("appstatus", [
+  "interviewed",
+  "pending",
+  "rejected",
+]);
+export const secondaryStatusesEnum = pgEnum("secondaryStatuses", [
   "",
   "received take-home",
   "completed take-home",
@@ -23,14 +26,12 @@ const secondaryStatusTypes = [
   "completed tech interview",
   "completed interview rounds",
   "received offer",
-] as const;
+]);
 
-export const statusesEnum = pgEnum("statuses", statusTypes);
-export const secondaryStatusesEnum = pgEnum(
-  "secondaryStatuses",
-  secondaryStatusTypes,
-);
+export const statusTypes = appStatusEnum.enumValues;
+export const secondaryStatusTypes = secondaryStatusesEnum.enumValues;
 
+// export const accessEnum = pgEnum("accesslevels", ["user", "admin", "special"]);
 export const accessEnum = pgEnum("accesslevels", ["read", "write", "demo"]);
 
 /**
@@ -39,26 +40,7 @@ export const accessEnum = pgEnum("accesslevels", ["read", "write", "demo"]);
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator(
-  (name) => `job-application-tracker_${name}`,
-);
-
-export const application = createTable("application", {
-  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
-  role: varchar("role", { length: 256 }).notNull(),
-  company: varchar("company", { length: 256 }).notNull(),
-  applicationStatus: statusesEnum("applicationStatus").default("pending"),
-  secondaryStatus: secondaryStatusesEnum("secondaryStatus").default(""),
-  appliedAt: date("applied_at", { mode: "string" }).notNull(),
-  statusUrl: varchar("statusurl", { length: 1024 }).default(""),
-  descriptionUrl: varchar("descriptionurl", { length: 1024 }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-    () => new Date(),
-  ),
-});
+export const createTable = pgTableCreator((name) => `jat_${name}`);
 
 export const users = createTable("user", {
   id: varchar("id", { length: 255 })
@@ -72,11 +54,37 @@ export const users = createTable("user", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
-  accessLevel: accessEnum("accesslevel").default("demo"),
+  accessLevel: accessEnum().default("demo"),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  applications: many(applications),
+}));
+
+export const applications = createTable("applications", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  role: varchar("role", { length: 256 }).notNull(),
+  company: varchar("company", { length: 256 }).notNull(),
+  applicationStatus: appStatusEnum().default("pending"),
+  secondaryStatus: secondaryStatusesEnum().default(""),
+  appliedAt: date("applied_at", { mode: "string" }).notNull(),
+  statusUrl: varchar("statusurl", { length: 1024 }).default(""),
+  descriptionUrl: varchar("descriptionurl", { length: 1024 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+  createdBy: integer("created_by"),
+});
+
+export const applicationRelations = relations(applications, ({ one }) => ({
+  user: one(users, {
+    fields: [applications.createdBy],
+    references: [users.id],
+  }),
 }));
 
 export const accounts = createTable(
