@@ -32,6 +32,34 @@ export async function getApplications() {
   return applications;
 }
 
+export async function getSpecialApplicationList() {
+  let applications: ApplicationArray = [];
+
+  const userId: string = await getMyUserId();
+
+  applications = await db.query.applications.findMany({
+    where: (applications, { eq }) => eq(applications.createdBy, userId),
+    orderBy: (model, { desc, asc }) => [
+      asc(model.applicationStatus),
+      desc(model.appliedAt),
+      desc(model.createdAt),
+    ],
+  });
+
+  return applications;
+}
+
+async function getMyUserId() {
+  const userId = await db.query.users.findFirst({
+    columns: {
+      id: true,
+    },
+    where: (users, { eq }) => eq(users.name, "Jeffrey de Wit"),
+  });
+
+  return userId ? userId.id : "";
+}
+
 export async function getAdminApplicationList() {
   let applications: ApplicationArray = [];
 

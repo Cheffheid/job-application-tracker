@@ -2,6 +2,7 @@ import Link from "next/link";
 import ApplicationCard from "./_components/applicationcard";
 import DemoBanner from "./_components/demobanner";
 import { getApplications } from "~/server/queries";
+import SpecialApplicationsList from "./_components/specialapplicationlist";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +34,7 @@ export default async function HomePage() {
           ></ApplicationCard>
         ))}
       </div>
+      <SpecialApplicationsList></SpecialApplicationsList>
     </div>
   );
 }
