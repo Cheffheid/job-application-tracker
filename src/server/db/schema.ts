@@ -32,7 +32,7 @@ export const statusTypes = appStatusEnum.enumValues;
 export const secondaryStatusTypes = secondaryStatusesEnum.enumValues;
 
 export const accessEnum = pgEnum("accesslevels", [
-  "user",
+  "write",
   "admin",
   "special",
   "demo",
@@ -58,7 +58,7 @@ export const users = createTable("user", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
-  accessLevel: accessEnum().default("user"),
+  accessLevel: accessEnum().default("write"),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
