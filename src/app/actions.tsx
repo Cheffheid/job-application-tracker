@@ -2,12 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "~/server/db";
-import { application } from "~/server/db/schema";
+import { applications } from "~/server/db/schema";
 import { auth } from "~/server/auth";
 import { createInsertSchema } from "drizzle-zod";
 import { eq } from "drizzle-orm";
 
-type ApplicationType = typeof application.$inferInsert;
+type ApplicationType = typeof applications.$inferInsert;
 
 export async function isDemoUser() {
   const session = await auth();
@@ -31,7 +31,7 @@ export async function createApplication(
     successful: boolean;
   };
 }> {
-  const schema = createInsertSchema(application);
+  const schema = createInsertSchema(applications);
 
   const parse = schema.safeParse({
     role: formData.get("role"),
@@ -51,7 +51,7 @@ export async function createApplication(
   const data: ApplicationType = parse.data;
 
   try {
-    await db.insert(application).values(data);
+    await db.insert(applications).values(data);
 
     revalidatePath("/");
 
@@ -83,7 +83,7 @@ export async function updateApplication(
     successful: boolean;
   };
 }> {
-  const schema = createInsertSchema(application, {
+  const schema = createInsertSchema(applications, {
     id: (schema) => schema.positive(),
   });
 
@@ -115,7 +115,7 @@ export async function updateApplication(
   }
 
   try {
-    await db.update(application).set(data).where(eq(application.id, data.id));
+    await db.update(applications).set(data).where(eq(applications.id, data.id));
 
     revalidatePath("/application/update");
 
