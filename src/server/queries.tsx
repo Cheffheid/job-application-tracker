@@ -2,15 +2,17 @@ import "server-only";
 import { db } from "./db";
 import { isDemoUser, getUserId } from "~/app/actions";
 
+type ApplicationArray = {
+  id: number;
+  role: string;
+  company: string;
+  applicationStatus: string | null;
+  appliedAt: string;
+  descriptionUrl: string;
+}[];
+
 export async function getApplications() {
-  let applications: {
-    id: number;
-    role: string;
-    company: string;
-    applicationStatus: string | null;
-    appliedAt: string;
-    descriptionUrl: string;
-  }[] = [];
+  let applications: ApplicationArray = [];
 
   const userId: string = await getUserId();
 
@@ -31,9 +33,12 @@ export async function getApplications() {
 }
 
 export async function getAdminApplicationList() {
-  let applications = [];
+  let applications: ApplicationArray = [];
+
+  const userId: string = await getUserId();
 
   applications = await db.query.applications.findMany({
+    where: (applications, { eq }) => eq(applications.createdBy, userId),
     orderBy: (model, { desc }) => [desc(model.createdAt)],
   });
 
