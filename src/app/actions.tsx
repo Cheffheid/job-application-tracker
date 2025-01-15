@@ -32,6 +32,7 @@ export async function createApplication(
   };
 }> {
   const schema = createInsertSchema(applications);
+  const user = await auth();
 
   const parse = schema.safeParse({
     role: formData.get("role"),
@@ -39,9 +40,11 @@ export async function createApplication(
     appliedAt: formData.get("applied_at"),
     statusUrl: formData.get("statusurl"),
     descriptionUrl: formData.get("descriptionurl"),
+    createdBy: user?.user.id,
   });
 
   if (!parse.success) {
+    console.error("Failed to parse input", parse.error);
     return {
       message: "Failed to create application",
       payload: { completed: true, successful: false },
@@ -60,6 +63,7 @@ export async function createApplication(
       payload: { completed: true, successful: true },
     };
   } catch (e) {
+    console.error("Failed to create application:", e);
     return {
       message: "Failed to create application",
       payload: { completed: true, successful: false },
