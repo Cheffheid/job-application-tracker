@@ -20,13 +20,13 @@ const linkClasses =
 async function AdminMenu() {
   const session = await auth();
 
-  if (!session || "admin" !== session.user.accessLevel) {
+  if (!session || "demo" === session.user.accessLevel) {
     return;
   }
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Admin</SidebarGroupLabel>
+      <SidebarGroupLabel>Applications</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -36,7 +36,7 @@ async function AdminMenu() {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <Link href="/application/update" className={linkClasses}>
-              Update
+              Manage
             </Link>
           </SidebarMenuItem>
         </SidebarMenu>
