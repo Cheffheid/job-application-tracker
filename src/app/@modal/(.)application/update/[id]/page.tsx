@@ -2,7 +2,7 @@ import UpdateForm from "~/app/_components/forms/update-form";
 import { Modal } from "~/app/_components/modal";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
-import { application } from "~/server/db/schema";
+import { applications } from "~/server/db/schema";
 
 export default async function ApplicationModal({
   params,
@@ -16,12 +16,12 @@ export default async function ApplicationModal({
     throw new Error("Invalid Application ID");
   }
 
-  const applicationData = await db.query.application.findFirst({
+  const applicationData = await db.query.applications.findFirst({
     columns: {
       updatedAt: false,
       createdAt: false,
     },
-    where: eq(application.id, idAsNumber),
+    where: eq(applications.id, idAsNumber),
   });
 
   if (!applicationData) {
