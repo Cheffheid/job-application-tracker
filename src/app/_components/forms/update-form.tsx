@@ -3,7 +3,7 @@
 import React, { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateApplication } from "~/app/actions";
-import { statusesEnum, secondaryStatusesEnum } from "~/server/db/schema";
+import { appStatusEnum, secondaryStatusesEnum } from "~/server/db/schema";
 
 export default function UpdateForm({
   application,
@@ -143,8 +143,11 @@ export default function UpdateForm({
           name="applicationStatus"
           id="applicationStatus"
           onChange={handleValueUpdate}
+          value={
+            application.applicationStatus ? application.applicationStatus : ""
+          }
         >
-          {statusesEnum.enumValues.map((statusText, idx) => {
+          {appStatusEnum.enumValues.map((statusText, idx) => {
             return (
               <option key={`status-${idx}`} value={statusText}>
                 {statusText}
