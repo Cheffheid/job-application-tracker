@@ -18,7 +18,7 @@ export async function isDemoUser() {
 export async function isSpecialUser() {
   const session = await auth();
 
-  return !session || "special" === session.user.accessLevel;
+  return session && "special" === session.user.accessLevel;
 }
 
 export async function getUserId() {
