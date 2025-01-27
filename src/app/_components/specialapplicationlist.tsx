@@ -11,7 +11,7 @@ export default async function SpecialApplicationsList() {
 
   return (
     <div className="py-4">
-      <h2 className="text-2xl font-semibold">Special Application List</h2>
+      <h2 className="text-2xl font-semibold">Jeff&lsquo;s Application List</h2>
       <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
         {specialapplications.map((application) => (
           <ApplicationCard

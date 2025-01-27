@@ -11,7 +11,8 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 pt-4">
-      <h2 className="text-2xl font-semibold">Application List</h2>
+      <SpecialApplicationsList></SpecialApplicationsList>
+      <h2 className="text-2xl font-semibold">Your Applications</h2>
       <DemoBanner></DemoBanner>
       {!applications.length && (
         <p>
@@ -34,7 +35,6 @@ export default async function HomePage() {
           ></ApplicationCard>
         ))}
       </div>
-      <SpecialApplicationsList></SpecialApplicationsList>
     </div>
   );
 }
