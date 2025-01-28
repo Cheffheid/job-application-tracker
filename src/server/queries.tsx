@@ -1,15 +1,11 @@
 import "server-only";
 import { db } from "./db";
 import { isDemoUser, getUserId } from "~/app/actions";
+import { statusTypes } from "~/server/db/schema";
 
-type ApplicationArray = {
-  id: number;
-  role: string;
-  company: string;
-  applicationStatus: string | null;
-  appliedAt: string;
-  descriptionUrl: string;
-}[];
+import { type ApplicationArray } from "~/lib/types";
+
+type SplitApplicationArray = Map<string, ApplicationArray>;
 
 export async function getApplications() {
   let applications: ApplicationArray = [];
@@ -29,7 +25,7 @@ export async function getApplications() {
     });
   }
 
-  return applications;
+  return organizeApplications(applications);
 }
 
 export async function getSpecialApplicationList() {
@@ -46,7 +42,7 @@ export async function getSpecialApplicationList() {
     ],
   });
 
-  return applications;
+  return organizeApplications(applications);
 }
 
 async function getMyUserId() {
@@ -141,4 +137,20 @@ export function getDummyApplications(): {
         "https://www.digitalhorizons.com/jobs/senior-fullstack-engineer",
     },
   ];
+}
+
+function organizeApplications(
+  applications: ApplicationArray = [],
+): SplitApplicationArray {
+  const splitApplications = new Map<string, ApplicationArray>();
+
+  statusTypes.forEach((status) => {
+    const filtered_applications = applications.filter(
+      (application) => application.applicationStatus === status,
+    );
+
+    splitApplications.set(status, filtered_applications);
+  });
+
+  return splitApplications;
 }
