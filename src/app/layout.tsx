@@ -1,15 +1,17 @@
 import "~/styles/globals.css";
 
+import React from "react";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 
+import { auth } from "~/server/auth";
+
 import TopNav from "./_components/topnav";
+import AppSidebar from "./_components/appsidebar";
 
 import { Toaster } from "~/components/ui/sonner";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
-import AppSidebar from "./_components/appsidebar";
-import React from "react";
 
 export const metadata: Metadata = {
   title: "My Job Application Tracker",
@@ -17,16 +19,23 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   modal,
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
+  const session = await auth();
+  let accesslevel = "";
+
+  if (session) {
+    accesslevel = session.user?.accessLevel;
+  }
+
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <SessionProvider>
           <SidebarProvider>
-            <AppSidebar variant="inset" />
+            <AppSidebar variant="inset" accesslevel={accesslevel} />
             <SidebarInset>
               <TopNav></TopNav>
               <main className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-slate-100">

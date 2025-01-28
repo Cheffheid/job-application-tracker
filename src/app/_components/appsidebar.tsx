@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { auth } from "~/server/auth";
+import { usePathname } from "next/navigation";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
@@ -13,26 +15,45 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "~/components/ui/sidebar";
+import React from "react";
 
-const linkClasses =
+interface AppSidebarProps
+  extends React.ComponentPropsWithoutRef<typeof Sidebar> {
+  accesslevel?: string;
+}
+
+const baseLinkClasses =
   "false group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-textSidebar duration-100 ease-in-out hover:bg-hoverSidebar focus:bg-hoverSidebar";
+const activeLinkClasses = baseLinkClasses + " bg-hoverSidebar";
 
-async function AdminMenuItems() {
-  const session = await auth();
+function determineAccess(accesslevel = "") {
+  return "write" === accesslevel || "admin" === accesslevel;
+}
 
-  if (!session || "demo" === session.user.accessLevel) {
-    return;
-  }
-
+function AdminMenuItems({ currentpath = "" }: { currentpath: string }) {
   return (
     <>
       <SidebarMenuItem>
-        <Link href="/application/update" className={linkClasses}>
+        <Link
+          href="/application/update"
+          className={
+            currentpath === "/application/update"
+              ? activeLinkClasses
+              : baseLinkClasses
+          }
+        >
           Manage
         </Link>
       </SidebarMenuItem>
       <SidebarMenuItem>
-        <Link href="/application/add" className={linkClasses}>
+        <Link
+          href="/application/add"
+          className={
+            currentpath === "/application/add"
+              ? activeLinkClasses
+              : baseLinkClasses
+          }
+        >
           Add New
         </Link>
       </SidebarMenuItem>
@@ -40,11 +61,15 @@ async function AdminMenuItems() {
   );
 }
 
-export default function AppSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+const AppSidebar = React.forwardRef<
+  React.ComponentRef<typeof Sidebar>,
+  AppSidebarProps
+>(({ accesslevel, ...props }, ref) => {
+  const currentPath = usePathname();
+  const adminmenu = determineAccess(accesslevel);
+
   return (
-    <Sidebar {...props}>
+    <Sidebar {...props} ref={ref}>
       <SidebarHeader>
         <h1 className="text-center font-bold text-white">
           Job Application Tracker
@@ -59,15 +84,26 @@ export default function AppSidebar({
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <Link href="/" className={linkClasses}>
+                <Link
+                  href="/"
+                  className={
+                    currentPath === "/" ? activeLinkClasses : baseLinkClasses
+                  }
+                >
                   List
                 </Link>
               </SidebarMenuItem>
-              <AdminMenuItems></AdminMenuItems>
+              {adminmenu && (
+                <AdminMenuItems currentpath={currentPath}></AdminMenuItems>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );
-}
+});
+
+AppSidebar.displayName = "App Sidebar";
+
+export default AppSidebar;
