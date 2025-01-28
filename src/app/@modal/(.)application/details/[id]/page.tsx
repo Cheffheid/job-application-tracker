@@ -39,7 +39,9 @@ export default async function ApplicationDetailsModal({
           </h3>
           {applicationData.applicationStatus && (
             <StatusBadge status={applicationData.applicationStatus}>
-              {applicationData.applicationStatus}
+              {"interviewed" === applicationData.applicationStatus
+                ? "interviewing"
+                : applicationData.applicationStatus}
             </StatusBadge>
           )}
         </div>

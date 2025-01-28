@@ -44,7 +44,12 @@ export default function ApplicationCard({
       <p>{company}</p>
       <div>
         {appliedAt} &bull;{" "}
-        {status && <StatusBadge status={status}>{status}</StatusBadge>}
+        {status && (
+          <StatusBadge status={status}>
+            {" "}
+            {"interviewed" === status ? "interviewing" : status}
+          </StatusBadge>
+        )}
       </div>
     </Link>
   );

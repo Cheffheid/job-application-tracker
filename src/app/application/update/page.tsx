@@ -55,7 +55,9 @@ export default async function Dashboard() {
                     <td className="p-2">
                       {application.applicationStatus && (
                         <StatusBadge status={application.applicationStatus}>
-                          {application.applicationStatus}
+                          {"interviewed" === application.applicationStatus
+                            ? "interviewing"
+                            : application.applicationStatus}
                         </StatusBadge>
                       )}
                     </td>
