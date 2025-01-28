@@ -1,5 +1,5 @@
 import Link from "next/link";
-import StatusBadge from "./statusbadge";
+import StatusBadge from "../statusbadge";
 
 interface ApplicationCardProps {
   role: string;

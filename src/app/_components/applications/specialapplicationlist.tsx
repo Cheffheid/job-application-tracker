@@ -1,5 +1,5 @@
 import { getSpecialApplicationList } from "~/server/queries";
-import { isSpecialUser } from "../actions";
+import { isSpecialUser } from "../../actions";
 import ApplicationCard from "./applicationcard";
 
 export default async function SpecialApplicationsList() {

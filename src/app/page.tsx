@@ -1,8 +1,8 @@
 import Link from "next/link";
-import ApplicationCard from "./_components/applicationcard";
+import ApplicationCard from "./_components/applications/applicationcard";
 import DemoBanner from "./_components/demobanner";
 import { getApplications } from "~/server/queries";
-import SpecialApplicationsList from "./_components/specialapplicationlist";
+import SpecialApplicationsList from "./_components/applications/specialapplicationlist";
 
 export const dynamic = "force-dynamic";
 
