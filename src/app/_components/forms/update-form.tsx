@@ -3,7 +3,7 @@
 import React, { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { updateApplication } from "~/app/actions";
-import { appStatusEnum, secondaryStatusesEnum } from "~/server/db/schema";
+import { statusTypes, secondaryStatusTypes } from "~/server/db/schema";
 
 export default function UpdateForm({
   application,
@@ -13,6 +13,7 @@ export default function UpdateForm({
     role: string;
     company: string;
     applicationStatus: string | null;
+    secondaryStatus: string | null;
     appliedAt: string;
     statusUrl: string | null;
     descriptionUrl: string;
@@ -144,10 +145,12 @@ export default function UpdateForm({
           id="applicationStatus"
           onChange={handleValueUpdate}
           value={
-            application.applicationStatus ? application.applicationStatus : ""
+            applicationData.applicationStatus
+              ? applicationData.applicationStatus
+              : ""
           }
         >
-          {appStatusEnum.enumValues.map((statusText, idx) => {
+          {statusTypes.map((statusText, idx) => {
             return (
               <option key={`status-${idx}`} value={statusText}>
                 {statusText}
@@ -165,8 +168,13 @@ export default function UpdateForm({
           name="secondaryStatus"
           id="secondaryStatus"
           onChange={handleValueUpdate}
+          value={
+            applicationData.secondaryStatus
+              ? applicationData.secondaryStatus
+              : ""
+          }
         >
-          {secondaryStatusesEnum.enumValues.map((statusText, idx) => {
+          {secondaryStatusTypes.map((statusText, idx) => {
             return (
               <option key={`secondary-status-${idx}`} value={statusText}>
                 {statusText}
