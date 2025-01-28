@@ -1,4 +1,6 @@
 import "server-only";
+import { sql } from "drizzle-orm";
+
 import { db } from "./db";
 import { isDemoUser, getUserId, isSpecialUser } from "~/app/actions";
 import { statusTypes } from "~/server/db/schema";
@@ -87,8 +89,34 @@ export async function getAdminApplicationList() {
   const userId: string = await getUserId();
 
   applications = await db.query.applications.findMany({
-    where: (applications, { eq }) => eq(applications.createdBy, userId),
-    orderBy: (model, { desc }) => [desc(model.createdAt)],
+    where: (applications, { eq, and, not }) =>
+      and(
+        eq(applications.createdBy, userId),
+        not(eq(applications.applicationStatus, "rejected")),
+      ),
+    orderBy: (model, { asc }) => [asc(sql`lower(${model.company})`)],
+  });
+
+  return applications;
+}
+
+/**
+ * Gets the list of applications as I expect them to be for the update screen table.
+ *
+ * @returns {ApplicationArray}
+ */
+export async function getAdminArchivedApplicationList() {
+  let applications: ApplicationArray = [];
+
+  const userId: string = await getUserId();
+
+  applications = await db.query.applications.findMany({
+    where: (applications, { eq, and }) =>
+      and(
+        eq(applications.createdBy, userId),
+        eq(applications.applicationStatus, "rejected"),
+      ),
+    orderBy: (model, { asc }) => [asc(model.appliedAt)],
   });
 
   return applications;
