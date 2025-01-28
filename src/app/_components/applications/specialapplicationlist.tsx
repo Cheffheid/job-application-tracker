@@ -1,6 +1,7 @@
 import { getSpecialApplicationList } from "~/server/queries";
-import { isSpecialUser } from "../../actions";
-import ApplicationCard from "./applicationcard";
+import { isSpecialUser } from "~/app/actions";
+import ApplicationList from "@components/applications/applicationlists";
+import { statusTypes } from "~/server/db/schema";
 
 export default async function SpecialApplicationsList() {
   if (!(await isSpecialUser())) {
@@ -12,18 +13,16 @@ export default async function SpecialApplicationsList() {
   return (
     <div className="py-4">
       <h2 className="text-2xl font-semibold">Jeff&lsquo;s Application List</h2>
-      <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
-        {specialapplications.map((application) => (
-          <ApplicationCard
-            key={application.id}
-            role={application.role}
-            company={application.company}
-            status={application.applicationStatus}
-            appliedAt={application.appliedAt}
-            descriptionUrl={application.descriptionUrl}
-          ></ApplicationCard>
-        ))}
-      </div>
+      {statusTypes.map((status) => {
+        return (
+          <div key={status} className="py-4">
+            <h3 className="text-xl font-semibold capitalize">{status}</h3>
+            <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
+              <ApplicationList applications={specialapplications.get(status)} />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

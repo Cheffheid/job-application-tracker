@@ -1,20 +1,36 @@
 import Link from "next/link";
-import ApplicationCard from "./_components/applications/applicationcard";
-import DemoBanner from "./_components/demobanner";
+import DemoBanner from "@components/demobanner";
+import SpecialApplicationsList from "@components/applications/specialapplicationlist";
+import ApplicationList from "@components/applications/applicationlists";
+import { statusTypes } from "~/server/db/schema";
+
 import { getApplications } from "~/server/queries";
-import SpecialApplicationsList from "./_components/applications/specialapplicationlist";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const applications = await getApplications();
 
+  let hasApplications = false;
+
+  statusTypes.forEach((status) => {
+    if (!applications.has(status)) {
+      return;
+    }
+
+    const status_applications = applications.get(status);
+
+    if (status_applications && status_applications.length > 0) {
+      hasApplications = true;
+    }
+  });
+
   return (
     <div className="mx-auto w-full max-w-7xl px-4 pt-4">
       <SpecialApplicationsList></SpecialApplicationsList>
       <h2 className="text-2xl font-semibold">Your Applications</h2>
       <DemoBanner></DemoBanner>
-      {!applications.length && (
+      {!hasApplications && (
         <p>
           You have not added any applications yet! Go ahead and{" "}
           <Link href="/application/add" className="underline">
@@ -23,18 +39,16 @@ export default async function HomePage() {
           .
         </p>
       )}
-      <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
-        {applications.map((application) => (
-          <ApplicationCard
-            key={application.id}
-            role={application.role}
-            company={application.company}
-            status={application.applicationStatus}
-            appliedAt={application.appliedAt}
-            descriptionUrl={application.descriptionUrl}
-          ></ApplicationCard>
-        ))}
-      </div>
+      {statusTypes.map((status) => {
+        return (
+          <div key={status} className="py-4">
+            <h3 className="text-xl font-semibold capitalize">{status}</h3>
+            <div className="grid gap-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
+              <ApplicationList applications={applications.get(status)} />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
