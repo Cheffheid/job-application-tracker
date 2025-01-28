@@ -3,7 +3,6 @@ import "~/styles/globals.css";
 import React from "react";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
 
 import { auth } from "~/server/auth";
 
@@ -24,29 +23,24 @@ export default async function RootLayout({
   modal,
 }: Readonly<{ children: React.ReactNode; modal: React.ReactNode }>) {
   const session = await auth();
-  let accesslevel = "";
 
-  if (session) {
-    accesslevel = session.user?.accessLevel;
-  }
+  const accesslevel = session ? session.user?.accessLevel : "";
 
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <SessionProvider>
-          <SidebarProvider>
-            <AppSidebar variant="inset" accesslevel={accesslevel} />
-            <SidebarInset>
-              <TopNav></TopNav>
-              <main className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-slate-100">
-                {children}
-                {modal}
-                <div id="modal-root"></div>
-              </main>
-              <Toaster />
-            </SidebarInset>
-          </SidebarProvider>
-        </SessionProvider>
+        <SidebarProvider>
+          <AppSidebar variant="inset" accesslevel={accesslevel} />
+          <SidebarInset>
+            <TopNav session={session}></TopNav>
+            <main className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-slate-100">
+              {children}
+              {modal}
+              <div id="modal-root"></div>
+            </main>
+            <Toaster />
+          </SidebarInset>
+        </SidebarProvider>
       </body>
     </html>
   );
