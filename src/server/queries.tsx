@@ -1,6 +1,6 @@
 import "server-only";
 import { db } from "./db";
-import { isDemoUser, getUserId } from "~/app/actions";
+import { isDemoUser, getUserId, isSpecialUser } from "~/app/actions";
 import { statusTypes } from "~/server/db/schema";
 
 import { type ApplicationArray } from "~/lib/types";
@@ -9,12 +9,16 @@ type SplitApplicationArray = Map<string, ApplicationArray>;
 
 export async function getApplications() {
   let applications: ApplicationArray = [];
+  const [demoUser, specialUser] = await Promise.all([
+    isDemoUser(),
+    isSpecialUser(),
+  ]);
 
-  const userId: string = await getUserId();
-
-  if (await isDemoUser()) {
-    applications = getDummyApplications();
+  if (demoUser || specialUser) {
+    applications = await getOtherApplications(demoUser, specialUser);
   } else {
+    const userId: string = await getUserId();
+
     applications = await db.query.applications.findMany({
       where: (applications, { eq }) => eq(applications.createdBy, userId),
       orderBy: (model, { desc, asc }) => [
@@ -42,7 +46,7 @@ export async function getSpecialApplicationList() {
     ],
   });
 
-  return organizeApplications(applications);
+  return applications;
 }
 
 async function getMyUserId() {
@@ -69,7 +73,7 @@ export async function getAdminApplicationList() {
   return applications;
 }
 
-export function getDummyApplications(): {
+export function getDemoApplications(): {
   id: number;
   role: string;
   company: string;
@@ -153,4 +157,16 @@ function organizeApplications(
   });
 
   return splitApplications;
+}
+
+async function getOtherApplications(demo = false, special = false) {
+  if (demo) {
+    return getDemoApplications();
+  }
+
+  if (special) {
+    return getSpecialApplicationList();
+  }
+
+  return [];
 }

@@ -1,15 +1,21 @@
 import Link from "next/link";
 import DemoBanner from "@components/demobanner";
-import SpecialApplicationsList from "@components/applications/specialapplicationlist";
 import ApplicationList from "@components/applications/applicationlists";
+
 import { statusTypes } from "~/server/db/schema";
 
+import { isSpecialUser } from "~/app/actions";
 import { getApplications } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const applications = await getApplications();
+  const [applications, specialUser] = await Promise.all([
+    getApplications(),
+    isSpecialUser(),
+  ]);
+
+  const pageTitle = specialUser ? "Jeff's Applications" : "Your Applications";
 
   let hasApplications = false;
 
@@ -27,8 +33,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 pt-4">
-      <SpecialApplicationsList></SpecialApplicationsList>
-      <h2 className="text-2xl font-semibold">Your Applications</h2>
+      <h2 className="text-2xl font-semibold">{pageTitle}</h2>
       <DemoBanner></DemoBanner>
       {!hasApplications && (
         <p>
