@@ -140,8 +140,12 @@ export async function updateApplication(
       payload: { completed: true, successful: true },
     };
   } catch (e) {
+    let message = "Failed to update application.";
+
+    if (e instanceof Error) message += `: ${e.message}`;
+
     return {
-      message: "Failed to update application",
+      message,
       payload: { completed: true, successful: false },
     };
   }
