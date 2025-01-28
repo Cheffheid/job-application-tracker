@@ -7,6 +7,12 @@ import { type ApplicationArray } from "~/lib/types";
 
 type SplitApplicationArray = Map<string, ApplicationArray>;
 
+/**
+ * Main applications retrieval function. Will return demo or special applications if the user has that role,
+ * or the logged in user's applications if not.
+ *
+ * @returns {ApplicationArray}
+ */
 export async function getApplications() {
   let applications: ApplicationArray = [];
   const [demoUser, specialUser] = await Promise.all([
@@ -32,6 +38,11 @@ export async function getApplications() {
   return organizeApplications(applications);
 }
 
+/**
+ * Gets _my_ application list for anyone with the "special" role.
+ *
+ * @returns {ApplicationArray}
+ */
 export async function getSpecialApplicationList() {
   let applications: ApplicationArray = [];
 
@@ -49,6 +60,11 @@ export async function getSpecialApplicationList() {
   return applications;
 }
 
+/**
+ * Get _my_ user ID, so that people with "special" access can view my list of applications.
+ *
+ * @returns {ApplicationArray}
+ */
 async function getMyUserId() {
   const userId = await db.query.users.findFirst({
     columns: {
@@ -60,6 +76,11 @@ async function getMyUserId() {
   return userId ? userId.id : "";
 }
 
+/**
+ * Gets the list of applications as I expect them to be for the update screen table.
+ *
+ * @returns {ApplicationArray}
+ */
 export async function getAdminApplicationList() {
   let applications: ApplicationArray = [];
 
@@ -73,6 +94,11 @@ export async function getAdminApplicationList() {
   return applications;
 }
 
+/**
+ * Hardcoded list of applications for demo purposes.
+ *
+ * @returns {ApplicationArray}
+ */
 export function getDemoApplications(): {
   id: number;
   role: string;
@@ -143,6 +169,12 @@ export function getDemoApplications(): {
   ];
 }
 
+/**
+ * Utility function to help split applications by status.
+ *
+ * @param {ApplicationArray} applications List of applications to organize by status.
+ * @returns {SplitApplicationArray}
+ */
 function organizeApplications(
   applications: ApplicationArray = [],
 ): SplitApplicationArray {
@@ -159,6 +191,13 @@ function organizeApplications(
   return splitApplications;
 }
 
+/**
+ * Wrapper function to handle special application retrieval cases (demo and special users).
+ *
+ * @param {boolean} demo
+ * @param {boolean} special
+ * @returns {ApplicationArray}
+ */
 async function getOtherApplications(demo = false, special = false) {
   if (demo) {
     return getDemoApplications();
